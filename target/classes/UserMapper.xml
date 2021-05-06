@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+
+	<insert id = "insertUser" parameterType = "User">
+	INSERT INTO user_table
+	(id, password, name, nickname, dob, questionidx, answer, dor, email)
+	VALUES
+	(#{id}, #{password}, #{name}, #{nickname}, #{dob}, #{questionidx}, #{answer}, #{dor}, #{email})
+	</insert>
+	
+	<select id="loginUser" parameterType="String" resultType="User">
+		SELECT id, password, name, nickname, dob, questionidx, answer, dor, email FROM user_table WHERE id=#{id}
+	</select>
+	
+	<select id="getUserId" parameterType="Integer" resultType="Integer">
+		SELECT id FROM user_table
+	</select>
+
+	<select id="allUser" resultType="User">
+    SELECT id, password, name, nickname, dob, questionidx, answer, dor, email FROM user_table
+	</select>
+	
+	<delete id="deleteUser" parameterType="String">
+    DELETE FROM user_table WHERE id=#{uid};
+	</delete>
+	
+	<update id="updateUserpw" parameterType="HashMap">
+    UPDATE user_table SET password=#{newvalue} WHERE id=#{userid}
+	</update>
+	
+	<update id="updateUsernick" parameterType="HashMap">
+  	UPDATE user_table SET nickname=#{newvalue} WHERE id=#{userid}
+	</update>
+	
+	<update id="updateUseremail" parameterType="HashMap">
+	UPDATE user_table SET email=#{newvalue} WHERE id=#{userid}
+	</update>
+	
+	<insert id = "insertRank" parameterType = "HashMap">
+	INSERT INTO ranking_table
+	(userid, nickname, stage, score)
+	VALUES
+	(#{userid}, #{nickname}, #{stage}, #{score})
+	</insert>
+	
+	<select id="showRank" resultType="Rank">
+    SELECT * FROM ranking_table ORDER BY score DESC
+	</select>
+	
+	<select id="findUserId" parameterType="String" resultType="String">
+		SELECT id email FROM user_table WHERE email=#{email}
+	</select>
+
+	<select id="findUserPw" parameterType="String" resultType="String">
+		SELECT password FROM user_table WHERE id=#{id}
+	</select>
+	
+	<select id="findUserQuest" parameterType="String" resultType="String">
+		SELECT questionidx FROM user_table WHERE id=#{id}
+	</select>
+	
+	<select id="findUserAnswer" parameterType="String" resultType="String">
+		SELECT answer FROM user_table WHERE id=#{id}
+	</select>
+</mapper>
